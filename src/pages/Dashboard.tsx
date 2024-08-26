@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, {useCallback, useEffect, useState } from 'react'
 import Sidebar from '../components/Sidebar'
 import Theme from '../components/Theme';
 import Workspace from '../components/RightHeader';
@@ -25,7 +25,6 @@ const Dashboard = () => {
     const [showEmailDesktop, setShowEmailDesktop]= useState(0)
 
     let token:string =localStorage.getItem("reachinbox-auth") || takeToken();
-    console.log(token)
     
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
@@ -38,23 +37,23 @@ const Dashboard = () => {
       setIsModalOpen(false);
     };
 
-    const fetchData =()=>{
+    const fetchData = useCallback(() => {
         getMailList(token).then(res => {
-           setData(res);
+            setData(res);
             if (res?.length > 0) {
-               setSingleMail(res[0]);
+                setSingleMail(res[0]);
                 const id: number = res[0]?.threadId;
-                if (id !== undefined)  return getMailMasseges(id);
-                else  console.log("error id not found")
-                
-            } else  console.log("Email not Found")
-            
+                if (id !== undefined) return getMailMasseges(id);
+                else console.log("error id not found");
+            } else console.log("Email not Found");
         }).then(messages => setSingleMail(messages))
         .catch(error => console.error('Error:', error));
-    }
+    }, [token]);
+
+    token = location.search.split("?token=")?.join("");
     
     useEffect(()=>{
-      token = location.search.split("?token=")?.join("");
+      
       if(token)
       {
         let ParseData = jwtDecode(token);
@@ -64,7 +63,7 @@ const Dashboard = () => {
         localStorage.setItem("reachinbox-auth-email",JSON.stringify((ParseData as any).user.email));
       }
       fetchData()
-    },[token,render]);
+    },[fetchData,token,render]);
   
     function takeToken(): string {
         try {

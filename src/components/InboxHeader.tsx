@@ -1,5 +1,5 @@
 import { ChevronDown } from 'lucide-react'
-import React, { useEffect } from 'react'
+import React from 'react'
 import refresh from '../assets/icons/refresh.png'
 
 interface headerProps {
@@ -7,13 +7,7 @@ interface headerProps {
 }
 
 const InboxHeader:React.FC<headerProps> = ({currTheme}) => {
-    let token:string | null ;
 
-
-    useEffect(()=>{
-         token = localStorage.getItem("reachinbox-auth");
-         token = token ? JSON.parse(token) : ""; 
-    },[])
 
     return (<>
     <div style={{display:"flex", alignItems: "center", justifyContent: "center", borderColor: currTheme ? "#343A40" :  "#DFE3E8"}}>
