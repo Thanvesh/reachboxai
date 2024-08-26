@@ -66,7 +66,7 @@ const ReplySection:React.FC<replyProps> = ({currTheme,singleMail}) => {
                 <h2 className='text-[10px] mt-2 mb-3'>Today</h2>
             </div> 
             {
-                showReply &&  <div className={`absolute mt-[134px] w-[768px] ml-4 rounded-2xl  z-10  overflow-hidden  h-[450px] ${currTheme ? 'bg-  [#141517]': 'bg-white'}borderColor: currTheme ? "#343A40" :  "#DFE3E8"`}>
+                showReply &&  <div className={`absolute mt-[134px] w-[768px] ml-4 rounded-2xl  z-10  overflow-hidden  h-[450px] ${currTheme ? 'bg-[#141517]': 'bg-white'}`} style={{borderColor: `${currTheme ? "#343A40" :  "#DFE3E8"}`}}>
                     <SendReply currTheme ={currTheme} singleMail ={singleMail[0]} handleCancel ={()=>setShowReply(!showReply)}/>
                 </div>
             }
